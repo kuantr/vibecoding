@@ -229,70 +229,163 @@
       line-height: 1.55;
     }
 
-    /* ARCHETYPES */
+    /* QUIZ */
     #problems { background: var(--warm-white); }
 
-    .archetypes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
+    .quiz-wrap { max-width: 680px; margin: 0 auto; }
+
+    .quiz-progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 36px;
     }
 
-    .archetype-card {
-      background: var(--cream);
-      border-radius: var(--radius);
-      padding: 24px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border: 1.5px solid transparent;
-      position: relative;
-      overflow: hidden;
+    .quiz-progress-bar {
+      height: 3px;
+      flex: 1;
+      background: rgba(0,0,0,0.1);
+      border-radius: 4px;
+      transition: background 0.3s;
     }
 
-    .archetype-card:hover,
-    .archetype-card.active {
-      border-color: var(--accent);
-      background: #fff;
-      box-shadow: 0 8px 32px rgba(44,95,74,0.1);
+    .quiz-progress-bar.done { background: var(--accent); }
+    .quiz-progress-bar.active { background: var(--gold); }
+
+    .quiz-question {
+      display: none;
+      animation: fadeSlide 0.35s ease;
     }
 
-    .archetype-emoji {
-      font-size: 1.8rem;
+    .quiz-question.active { display: block; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateX(16px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .quiz-q-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 10px;
-      display: block;
     }
 
-    .archetype-name {
+    .quiz-q-text {
       font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--ink);
-      margin-bottom: 6px;
+      line-height: 1.35;
+      margin-bottom: 28px;
     }
 
-    .archetype-shadow {
-      font-size: 0.85rem;
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--cream);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--accent);
+      background: rgba(44,95,74,0.05);
+    }
+
+    .quiz-opt-letter {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--ink-muted);
-      font-weight: 400;
+      transition: all 0.2s;
     }
 
-    .archetype-case {
+    .quiz-opt:hover .quiz-opt-letter {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .quiz-opt-text {
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.45;
+      padding-top: 3px;
+    }
+
+    /* RESULT */
+    .quiz-result {
       display: none;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(0,0,0,0.08);
+      animation: fadeSlide 0.4s ease;
     }
 
-    .archetype-card.active .archetype-case {
+    .quiz-result.active { display: block; }
+
+    .result-archetype {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 36px 32px;
+      border-left: 4px solid var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .result-arch-emoji {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
       display: block;
     }
 
-    .archetype-case p {
-      font-size: 0.88rem;
+    .result-arch-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .result-arch-shadow {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .result-arch-case {
+      font-size: 0.95rem;
       color: var(--ink-muted);
-      line-height: 1.6;
-      margin-bottom: 14px;
       font-style: italic;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .quiz-retry {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      text-decoration: underline;
+      margin-top: 12px;
+      font-family: 'Manrope', sans-serif;
     }
 
     /* RESULTS */
@@ -574,71 +667,113 @@
   </div>
 </section>
 
-<!-- ARCHETYPES -->
+<!-- QUIZ -->
 <section id="problems">
   <div class="section-inner">
     <div class="section-label fade-in">Узнайте себя</div>
-    <h2 class="section-title fade-in">Нажмите на то, что откликается</h2>
-    <div class="archetypes-grid">
+    <h2 class="section-title fade-in">Короткий тест — 6 вопросов</h2>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">⚔️</span>
-        <div class="archetype-name">Герой</div>
-        <div class="archetype-shadow">Берёт всё на себя, не принимает помощь</div>
-        <div class="archetype-case">
-          <p>«Я пришёл с запросом о команде — почему они не работают так, как я. Через час понял: я никогда не объяснял, чего хочу на самом деле. Просто ожидал, что догадаются.»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+    <div class="quiz-wrap fade-in">
+      <!-- progress -->
+      <div class="quiz-progress" id="quiz-progress">
+        <div class="quiz-progress-bar active"></div>
+        <div class="quiz-progress-bar"></div>
+        <div class="quiz-progress-bar"></div>
+        <div class="quiz-progress-bar"></div>
+        <div class="quiz-progress-bar"></div>
+        <div class="quiz-progress-bar"></div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quiz-question active" data-q="0">
+        <div class="quiz-q-num">Вопрос 1 из 6</div>
+        <div class="quiz-q-text">Когда у вас возникает сложная задача — первый импульс?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(0,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Взяться самому — только я сделаю это правильно</div></div>
+          <div class="quiz-opt" onclick="answer(0,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Придумать три новых способа решения, начать один</div></div>
+          <div class="quiz-opt" onclick="answer(0,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Составить план и проконтролировать каждый шаг</div></div>
+          <div class="quiz-opt" onclick="answer(0,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Сначала собрать максимум информации</div></div>
+          <div class="quiz-opt" onclick="answer(0,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Спросить себя — а зачем мне это вообще нужно?</div></div>
+          <div class="quiz-opt" onclick="answer(0,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Сначала помочь тем, кого это тоже касается</div></div>
         </div>
       </div>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">🔭</span>
-        <div class="archetype-name">Творец / Визионер</div>
-        <div class="archetype-shadow">Идеи есть, реализации нет</div>
-        <div class="archetype-case">
-          <p>«У меня было 4 бизнеса одновременно. Ни один не приносил столько, сколько мог бы. Разобрались, почему я разрушаю то, что начинает работать. Это был страх — не лень.»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+      <!-- Q2 -->
+      <div class="quiz-question" data-q="1">
+        <div class="quiz-q-num">Вопрос 2 из 6</div>
+        <div class="quiz-q-text">Что чаще всего мешает вам двигаться быстрее?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(1,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Другие не справляются так, как мне нужно</div></div>
+          <div class="quiz-opt" onclick="answer(1,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Появляется новая идея, которая кажется важнее</div></div>
+          <div class="quiz-opt" onclick="answer(1,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Страшно потерять контроль над ситуацией</div></div>
+          <div class="quiz-opt" onclick="answer(1,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Нужно ещё немного разобраться, прежде чем действовать</div></div>
+          <div class="quiz-opt" onclick="answer(1,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Непонимание — куда именно я иду</div></div>
+          <div class="quiz-opt" onclick="answer(1,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Сложно сказать «нет» тем, кто просит о помощи</div></div>
         </div>
       </div>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">👑</span>
-        <div class="archetype-name">Правитель</div>
-        <div class="archetype-shadow">Не может отпустить контроль</div>
-        <div class="archetype-case">
-          <p>«Хотел делегировать, но всегда переделывал за другими. Устал. На сессии выяснилось: я не верю, что кто-то справится так же хорошо. И откуда это убеждение — было понятно сразу.»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+      <!-- Q3 -->
+      <div class="quiz-question" data-q="2">
+        <div class="quiz-q-num">Вопрос 3 из 6</div>
+        <div class="quiz-q-text">Как вы реагируете, когда достигаете важной цели?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(2,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Сразу ставлю следующую — нельзя расслабляться</div></div>
+          <div class="quiz-opt" onclick="answer(2,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Уже в процессе думаю о более крутой идее</div></div>
+          <div class="quiz-opt" onclick="answer(2,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Анализирую — что пошло не по плану</div></div>
+          <div class="quiz-opt" onclick="answer(2,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Думаю — а точно ли это было правильное решение?</div></div>
+          <div class="quiz-opt" onclick="answer(2,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Чувствую странную пустоту — и не понимаю почему</div></div>
+          <div class="quiz-opt" onclick="answer(2,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Радуюсь, но сразу думаю — как это скажется на других</div></div>
         </div>
       </div>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">📚</span>
-        <div class="archetype-name">Мудрец</div>
-        <div class="archetype-shadow">Анализирует вместо действия</div>
-        <div class="archetype-case">
-          <p>«Я читал книги, ходил на курсы, делал таблицы. Решение откладывал три года. На сессии понял: я уже всё знал. Просто боялся ошибиться — и называл это "сбором информации".»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+      <!-- Q4 -->
+      <div class="quiz-question" data-q="3">
+        <div class="quiz-q-num">Вопрос 4 из 6</div>
+        <div class="quiz-q-text">В отношениях с командой или партнёрами вас чаще всего раздражает:</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(3,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Когда не понимают с первого раза и нужно объяснять</div></div>
+          <div class="quiz-opt" onclick="answer(3,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Когда не разделяют мой энтузиазм к новому</div></div>
+          <div class="quiz-opt" onclick="answer(3,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Когда делают не так, как было договорено</div></div>
+          <div class="quiz-opt" onclick="answer(3,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Когда принимают решения без достаточного анализа</div></div>
+          <div class="quiz-opt" onclick="answer(3,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Когда от меня ждут чёткого плана, а я сам не знаю</div></div>
+          <div class="quiz-opt" onclick="answer(3,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Когда мои усилия воспринимают как само собой разумеющееся</div></div>
         </div>
       </div>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">🧭</span>
-        <div class="archetype-name">Искатель</div>
-        <div class="archetype-shadow">Пустота после достижения</div>
-        <div class="archetype-case">
-          <p>«Достиг того, о чём мечтал. И ничего не почувствовал. Пришёл с вопросом "что дальше" — и впервые за долгое время понял, что хочу именно я, а не то, что от меня ждут.»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+      <!-- Q5 -->
+      <div class="quiz-question" data-q="4">
+        <div class="quiz-q-num">Вопрос 5 из 6</div>
+        <div class="quiz-q-text">Что вы чувствуете, когда просите о помощи?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(4,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Неловкость — лучше справлюсь сам</div></div>
+          <div class="quiz-opt" onclick="answer(4,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Нетерпение — хочу сразу объяснить всю идею</div></div>
+          <div class="quiz-opt" onclick="answer(4,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Тревогу — а вдруг сделают не так</div></div>
+          <div class="quiz-opt" onclick="answer(4,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Сомнение — может, ещё немного подумать самому</div></div>
+          <div class="quiz-opt" onclick="answer(4,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Растерянность — не знаю, о чём именно попросить</div></div>
+          <div class="quiz-opt" onclick="answer(4,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Вину — как будто отнимаю чужое время</div></div>
         </div>
       </div>
 
-      <div class="archetype-card fade-in" onclick="toggleCard(this)">
-        <span class="archetype-emoji">🤲</span>
-        <div class="archetype-name">Опекун</div>
-        <div class="archetype-shadow">Заботится о всех, кроме себя</div>
-        <div class="archetype-case">
-          <p>«Я решаю проблемы сотрудников, партнёров, семьи. На себя не оставалось ни сил, ни денег. Через сессию — не через годы терапии — стало ясно, откуда это идёт и как остановить.»</p>
-          <a href="#booking" class="btn btn-primary" style="font-size:0.85rem;padding:9px 20px;">Записаться</a>
+      <!-- Q6 -->
+      <div class="quiz-question" data-q="5">
+        <div class="quiz-q-num">Вопрос 6 из 6</div>
+        <div class="quiz-q-text">Если честно — что сейчас занимает вас больше всего?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(5,0)"><div class="quiz-opt-letter">А</div><div class="quiz-opt-text">Как не надорваться, продолжая тянуть всё на себе</div></div>
+          <div class="quiz-opt" onclick="answer(5,1)"><div class="quiz-opt-letter">Б</div><div class="quiz-opt-text">Как довести хотя бы одно дело до конца</div></div>
+          <div class="quiz-opt" onclick="answer(5,2)"><div class="quiz-opt-letter">В</div><div class="quiz-opt-text">Как научиться доверять и отпускать</div></div>
+          <div class="quiz-opt" onclick="answer(5,3)"><div class="quiz-opt-letter">Г</div><div class="quiz-opt-text">Как перестать анализировать и начать действовать</div></div>
+          <div class="quiz-opt" onclick="answer(5,4)"><div class="quiz-opt-letter">Д</div><div class="quiz-opt-text">Что делать дальше, когда цель достигнута</div></div>
+          <div class="quiz-opt" onclick="answer(5,5)"><div class="quiz-opt-letter">Е</div><div class="quiz-opt-text">Как наконец поставить себя на первое место</div></div>
         </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="quiz-result" id="quiz-result">
+        <div class="result-archetype" id="result-block"></div>
+        <a href="#booking" class="btn btn-primary" style="font-size:1rem;padding:13px 32px;">Записаться на консультацию</a>
+        <br/>
+        <button class="quiz-retry" onclick="resetQuiz()">← Пройти тест заново</button>
       </div>
 
     </div>
@@ -792,11 +927,95 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Archetype toggle
-  function toggleCard(card) {
-    const wasActive = card.classList.contains('active');
-    document.querySelectorAll('.archetype-card').forEach(c => c.classList.remove('active'));
-    if (!wasActive) card.classList.add('active');
+  // QUIZ
+  const archetypes = [
+    {
+      emoji: '⚔️',
+      title: 'Герой',
+      shadow: 'Вы берёте всё на себя — и это вас тормозит',
+      case: '«Я пришёл с запросом о команде — почему они не работают так, как я. Через час понял: я никогда не объяснял, чего хочу на самом деле. Просто ожидал, что догадаются.»'
+    },
+    {
+      emoji: '🔭',
+      title: 'Творец / Визионер',
+      shadow: 'Идей много — завершённых проектов мало',
+      case: '«У меня было 4 бизнеса одновременно. Ни один не приносил столько, сколько мог бы. Разобрались, почему я разрушаю то, что начинает работать. Это был страх — не лень.»'
+    },
+    {
+      emoji: '👑',
+      title: 'Правитель',
+      shadow: 'Контроль защищает — но и ограничивает',
+      case: '«Хотел делегировать, но всегда переделывал за другими. Устал. На сессии выяснилось: я не верю, что кто-то справится так же хорошо. И откуда это убеждение — было понятно сразу.»'
+    },
+    {
+      emoji: '📚',
+      title: 'Мудрец',
+      shadow: 'Анализ стал способом избежать действия',
+      case: '«Я читал книги, ходил на курсы, делал таблицы. Решение откладывал три года. На сессии понял: я уже всё знал. Просто боялся ошибиться — и называл это "сбором информации".»'
+    },
+    {
+      emoji: '🧭',
+      title: 'Искатель',
+      shadow: 'После победы — пустота вместо радости',
+      case: '«Достиг того, о чём мечтал. И ничего не почувствовал. Пришёл с вопросом "что дальше" — и впервые за долгое время понял, что хочу именно я, а не то, что от меня ждут.»'
+    },
+    {
+      emoji: '🤲',
+      title: 'Опекун',
+      shadow: 'О себе — в последнюю очередь',
+      case: '«Я решаю проблемы сотрудников, партнёров, семьи. На себя не оставалось ни сил, ни денег. Через сессию — не через годы терапии — стало ясно, откуда это идёт и как остановить.»'
+    }
+  ];
+
+  const scores = [0, 0, 0, 0, 0, 0];
+  let currentQ = 0;
+
+  function answer(qIndex, archIndex) {
+    scores[archIndex]++;
+    currentQ = qIndex + 1;
+
+    // update progress
+    const bars = document.querySelectorAll('.quiz-progress-bar');
+    bars.forEach((b, i) => {
+      b.classList.remove('done', 'active');
+      if (i < currentQ) b.classList.add('done');
+      else if (i === currentQ) b.classList.add('active');
+    });
+
+    // hide current question
+    document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+
+    if (currentQ < 6) {
+      document.querySelector(`.quiz-question[data-q="${currentQ}"]`).classList.add('active');
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    const maxScore = Math.max(...scores);
+    const idx = scores.indexOf(maxScore);
+    const a = archetypes[idx];
+    document.getElementById('result-block').innerHTML = `
+      <span class="result-arch-emoji">${a.emoji}</span>
+      <div class="result-arch-title">${a.title}</div>
+      <div class="result-arch-shadow">${a.shadow}</div>
+      <p class="result-arch-case">${a.case}</p>
+    `;
+    document.getElementById('quiz-result').classList.add('active');
+  }
+
+  function resetQuiz() {
+    scores.fill(0);
+    currentQ = 0;
+    document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+    document.querySelector('.quiz-question[data-q="0"]').classList.add('active');
+    document.getElementById('quiz-result').classList.remove('active');
+    const bars = document.querySelectorAll('.quiz-progress-bar');
+    bars.forEach((b, i) => {
+      b.classList.remove('done', 'active');
+      if (i === 0) b.classList.add('active');
+    });
   }
 
   // Radio select styling
